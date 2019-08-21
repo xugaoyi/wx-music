@@ -1,2 +1,17 @@
-<!--pages/playlist/playlist.wxml-->
-<text>pages/playlist/playlist.wxml</text>
+ <!-- 轮播图组件 参数：indicator-dots 小圆点，autoplay 自动播放, interval 间隔时间，duration 动画时长 -->
+<swiper indicator-dots="true" circular="true" interval="3000" duration="500">
+  <block wx:for="{{swiperImgUrls}}" wx:key="url"> <!-- 空节点 -->
+    <swiper-item>
+      <image src="{{item.url}}" mode="widthFix" class="img"></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="playlist-container">
+  <block wx:for="{{playlist}}" wx:key="_id">
+    <!-- 参数：playlist 自定义名称，传入组件的数据 -->
+    <x-playlist playlist="{{item}}"></x-playlist>
+  </block>
+</view>
+
+
