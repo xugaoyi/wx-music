@@ -31,6 +31,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    goToMusiclist() {
+      wx.navigateTo({ // 跳转链接 并传入参数，在目标页面的js中的onLoad方法的options参数接收传入的参数
+        url: `../../pages/musiclist/musiclist?playlistId=${this.properties.playlist.id}`,
+      })
+    },
     _tranNunber(num, point) {
       let numStr = num.toString().split('.')[0] // 去掉小数点后面数
       let numStrL = numStr.length

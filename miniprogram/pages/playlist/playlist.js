@@ -1,5 +1,5 @@
 
-const MAX_LIMIT = 12
+const MAX_LIMIT = 15
 
 Page({
 
@@ -30,11 +30,17 @@ Page({
    */
   onReady: function() {
     this._getPlaylist()
-    // wx.cloud.callFunction({
-    //   name: 'getPlaylistLength'
-    // }).then((res) => {
-    //   console.log(res)
-    // })
+
+    wx.cloud.callFunction({ // 获取总数据长度
+      name: 'music',
+      data: {
+        $url: 'getPlaylistLength'
+      }
+    }).then((res) => {
+      this.setData({
+        playlistLength: res.result.total
+      })
+    })
   },
 
   /**
@@ -81,18 +87,23 @@ Page({
 
   // 获取歌单列表
   _getPlaylist(v) {
+    if (v === 'reach') {
+      if (this.data.playlist.length === this.data.playlistLength) { // 数据已加载完
+        return
+      }
+    }
     wx.showLoading({
       title: '加载中'
     })
     wx.cloud.callFunction({
       name: 'music', // 云函数名称
       data: { // 传给云函数的值
+        $url: 'playlist', // tcb-router 路由名称
         start: v === 'reach' ? this.data.playlist.length : 0,
         count: MAX_LIMIT
       }
     }).then((res) => {
       let data = res.result.data
-      console.log(data)
       if (v === 'reach') { // 上拉加载时为数据拼接，否则为数据替换
         data = this.data.playlist.concat(data)
       }
@@ -100,6 +111,9 @@ Page({
         playlist: data
       })
       wx.stopPullDownRefresh() // 停止下拉刷新动画
+      wx.hideLoading() // 隐藏loading
+    }).catch((err) => {
+      console.error(err)
       wx.hideLoading() // 隐藏loading
     })
   }

@@ -5,7 +5,7 @@ cloud.init()
 
 const db = cloud.database() // 初始化数据库
 
-const rp = require('request-promise') // 需安装依赖包
+const rp = require('request-promise') // 需安装依赖包 npm i -S request & npm i -S request-promise
 
 const URL = 'http://musicapi.xiecheng.live/personalized' // 第三方服务器地址（老师从网易云获取的数据部署在其服务器，每天的数据会更新）
 
@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
   /**
    * 注：
    * - 关于数据库的操作都是异步操作，都需添加await关键字
-   * - console.log 打印在云开发控制台 云函数测试内查看
+   * - console.log 打印在云开发控制台 云函数测试内查看，或再云函数日志查看打印记录
    * - 单次获取数据库数据有条数限制，云函数端最多获取100条，小程序端最多获取20条
    */
 
