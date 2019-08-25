@@ -10,7 +10,8 @@ Page({
    */
   data: {
     picUrl: '',
-    isPlaying: false
+    isPlaying: false,
+    isLyricShow: false
   },
 
   /**
@@ -56,6 +57,20 @@ Page({
         isPlaying: true
       })
       wx.hideLoading()
+
+      // 加载歌词
+      wx.cloud.callFunction({
+        name: 'music',
+        data: {
+          musicId,
+          $url: 'lyric'
+        }
+      }).then((res) => {
+        let lyric = '暂无歌词'
+        let lrc = JSON.parse(res.result)
+        console.log(result)
+      })
+
     })
   },
 
@@ -86,6 +101,13 @@ Page({
       nowPlayingIndex = 0
     }
     this._loadMusicDetail(musiclist[nowPlayingIndex].id)
+  },
+
+  // 显示隐藏歌词
+  onChangeLyricShow() {
+    this.setData({
+      isLyricShow: !this.data.isLyricShow
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

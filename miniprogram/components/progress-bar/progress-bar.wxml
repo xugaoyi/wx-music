@@ -3,18 +3,22 @@
   <view class="control">
     <!-- 小程序自带组件，可移动区域 -->
     <movable-area class="movable-area">
+      <!-- 可拖动圆点 x：x轴的偏移量 bindchange:进度条改变触发事件 bindtouchend:触摸结束时事件-->
       <movable-view
        class="movable-view"
        direction="horizontal"
        damping="1000"
        x="{{movableDis}}"
+       bindchange="onChange"
+       bindtouchend="onTouchEnd"
       />
     </movable-area>
-    <!-- 小程序自带组件，进度 -->
+    <!-- 小程序自带组件，进度（已播放的白色背景）percent：百分比宽度-->
     <progress
      stroke-width="4"
      backgroundColor="#969696"
      activeColor="#fff"
+     percent="{{progress}}"
     />
   </view>
   <text class="time">{{showTime.totalTime}}</text>

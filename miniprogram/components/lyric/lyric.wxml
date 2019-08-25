@@ -1,0 +1,3 @@
+<scroll-view hidden="{{isLyricShow}}">
+  歌词
+</scroll-view>
