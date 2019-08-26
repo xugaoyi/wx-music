@@ -8,13 +8,22 @@
     <image class="player-img rotation {{isPlaying ? '' : 'rotation-paused'}}" src="{{picUrl}}"></image>
   </view>
 
-  <!-- 进度条 属性isLyricShow为传入子组件数据-->
-  <x-lyric bind:tap="onChangeLyricShow" isLyricShow="{{!isLyricShow}}" />
+  <!-- 歌手、歌曲 -->
+  <text hidden="{{isLyricShow}}" class="singer">{{singer}} - {{musicName}}</text>
+
+  <!-- 歌词 -->
+  <x-lyric class="lyric" bind:tap="onChangeLyricShow" isLyricShow="{{!isLyricShow}}" lyric="{{lyric}}" />
 
   <!-- 进度条 -->
   <view class="progress-bar">
     <!-- bind:musicEnd 绑定子组件传过来的事件musicEnd -->
-    <x-progress-bar bind:musicEnd="onNext" />
+    <x-progress-bar
+      bind:musicEnd="onNext"
+      bind:timeUpdate="timeUpdate"
+      bind:musicPlay="onPlay"
+      bind:musicPause="onPause"
+      isSame="{{isSame}}"
+    />
   </view>
   
   <!-- 控制面板 -->

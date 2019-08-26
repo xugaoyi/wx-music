@@ -3,13 +3,13 @@ let movableWidth = 0
 const backgroundAudioManager = wx.getBackgroundAudioManager()
 let currentSec = -1
 let duration = 0 // 音乐总时长
-let isMoving = false
+let isMoving = false // 当前进度条是否在拖拽
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-
+    isSame: Boolean // 不写默认值时，默认值为false
   },
 
   /**
@@ -26,6 +26,9 @@ Component({
 
   lifetimes: {
     ready() { // 生命周期函数，组件在视图层布局完成后执行
+      if (this.properties.isSame && this.data.showTime.totalTime === '00:00'){ // 当前进入的是同一首歌
+        this._setTime()
+      }
       this._getMovableDis()
       this._bindBGMEvent()
     }
@@ -67,14 +70,15 @@ Component({
 
     // 音乐播放的各种事件
     _bindBGMEvent() {
-      backgroundAudioManager.onPlay(() => { // 播放
+      backgroundAudioManager.onPlay(() => { // 播放 (点击微信后台的播放按钮亦可监控到播放暂停事件)
         isMoving = false
+        this.triggerEvent('musicPlay')
       })
       backgroundAudioManager.onStop(() => { // 停止
 
       })
-      backgroundAudioManager.onPause(() => { // 暂停
-
+      backgroundAudioManager.onPause(() => { // 暂停 (点击微信后台的播放按钮亦可监控到播放暂停事件)
+        this.triggerEvent('musicPause')
       })
       backgroundAudioManager.onWaiting(() => { // 正在加载
         
@@ -108,6 +112,11 @@ Component({
             ['showTime.currentTime']: currentTimeFmt.min + ':' + currentTimeFmt.sec
           })
           currentSec = sec
+
+          // 联动歌词
+          this.triggerEvent('timeUpdate', { // 触发自定义事件 传递出去
+            currentTime
+          })
         }
       })
       backgroundAudioManager.onEnded(() => { // 音乐播放结束

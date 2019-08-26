@@ -1,3 +1,15 @@
-<scroll-view hidden="{{isLyricShow}}">
-  歌词
+<scroll-view
+  hidden="{{isLyricShow}}"
+  class="lyric-scroll"
+  scroll-y
+  scroll-top="{{scrollTop}}"
+  scroll-with-animation="true"
+  bindtouchstart="scrollTouchStart"
+  bindtouchend="scrollTouchEnd"
+>
+  <view class="lyric-panel">
+    <block wx:for="{{lrcList}}" wx:key="item">
+      <view class="lyric {{index == nowLyricIndex ? 'hightlight-lyric' : ''}}">{{item.lrc}}</view>
+    </block>
+  </view>
 </scroll-view>

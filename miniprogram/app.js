@@ -15,6 +15,15 @@ App({
       })
     }
 
-    this.globalData = {} // 设置全局属性、方法
+     // 设置全局属性、方法
+    this.globalData = {
+      playingMusicId: -1
+    }
+  },
+  setGlobalData(dataItem, val) { // 设置全局属性
+    this.globalData[dataItem] = val
+  },
+  getGlobalData(dataItem) { // 获取全局属性
+    return this.globalData[dataItem]
   }
 })

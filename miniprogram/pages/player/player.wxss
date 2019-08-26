@@ -65,6 +65,15 @@
   margin-left: -184rpx;
 }
 
+.singer{
+  color: rgb(200, 200, 200);
+  font-size: 30rpx;
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  width: 100%;
+}
+
 .control {
   position: absolute;
   bottom: 8%;
