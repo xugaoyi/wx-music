@@ -1,2 +1,20 @@
-<!--pages/blog/blog.wxml-->
-<text>pages/blog/blog.wxml</text>
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="publish-container" bind:tap="onPublish">
+      <i class="iconfont icon-fabu" />
+    </view>
+    <view class="search-container">
+
+      <!-- iconfont 和 icon-sousuo 是传入组件内部的样式名称，iconfont（自定义名称）="iconfont（外部样式文件中定义的样式名）"  -->
+      <x-search iconfont="iconfont" icon-sousuo="icon-sousuo"/>
+    </view>
+  </view>
+
+  <!-- 底部弹出层 -->
+  <x-login
+    modalShow="{{modalShow}}"
+    bind:loginSuccess="onLoginSuccess"
+    bind:loginFail="onLoginFail"
+  ></x-login>
+</view>

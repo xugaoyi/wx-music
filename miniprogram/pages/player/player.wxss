@@ -65,7 +65,7 @@
   margin-left: -184rpx;
 }
 
-.singer{
+.lyric-line{
   color: rgb(200, 200, 200);
   font-size: 30rpx;
   position: absolute;

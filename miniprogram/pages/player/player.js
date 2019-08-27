@@ -13,8 +13,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    musicName: '',
-    singer: '',
+    nowLyric: '', // 单行歌词
     picUrl: '',
     isPlaying: false,
     isLyricShow: false,
@@ -53,11 +52,9 @@ Page({
     let music = musiclist[nowPlayingIndex]
 
     wx.setNavigationBarTitle({ // 设置title
-      title: music.name,
+      title: music.name + ' - ' + music.ar[0].name,
     })
     this.setData({
-      musicName: music.name, // 歌曲名称
-      singer: music.ar[0].name, // 歌手
       picUrl: music.al.picUrl, // 唱片图片
       isPlaying: false
     })
@@ -66,11 +63,12 @@ Page({
     app.setGlobalData('playingMusicId', parseInt(musicId))
 
     // 显示加载动画
-    if (!this.data.isSame) {
-      // wx.showLoading({
-      //   title: '歌曲加载中',
-      // })
-    }
+    // if (!this.data.isSame) {
+    //   wx.showLoading({
+    //     title: '歌曲加载中',
+    //   })
+    // }
+
     //获取歌曲播放链接
     wx.cloud.callFunction({
       name: 'music',
@@ -111,27 +109,26 @@ Page({
       this.setData({
         isPlaying: true
       })
-      wx.hideLoading()
-
-      // 加载歌词
-      wx.cloud.callFunction({
-        name: 'music',
-        data: {
-          musicId,
-          $url: 'lyric'
-        }
-      }).then((res) => {
-        let lyric = '暂无歌词'
-        const lrc = JSON.parse(res.result).lrc
-        if(lrc){
-          lyric = lrc.lyric
-        }
-        this.setData({
-          lyric
-        })
-      })
-
+      // wx.hideLoading()
     })
+
+    // 加载歌词
+    this.setData({
+      lyric: '[00:00.000] 加载歌词中...'
+    })
+    wx.cloud.callFunction({
+      name: 'music',
+      data: {
+        musicId,
+        $url: 'lyric'
+      }
+    }).then((res) => {
+      const lrc = JSON.parse(res.result).lrc
+      this.setData({
+        lyric: lrc ? lrc.lyric : '暂无歌词'
+      })
+    })
+
   },
 
   // 播放与暂停
@@ -149,7 +146,7 @@ Page({
   // 上一首
   onPrev() {
     nowPlayingIndex--
-    if (nowPlayingIndex < 0) {
+    if (nowPlayingIndex < 0) { // 第一首时
       nowPlayingIndex = musiclist.length - 1
     }
     this._loadMusicDetail(musiclist[nowPlayingIndex].id)
@@ -157,7 +154,7 @@ Page({
   // 下一首
   onNext() {
     nowPlayingIndex++
-    if (nowPlayingIndex === musiclist.length) {
+    if (nowPlayingIndex === musiclist.length) { // 最后一首时
       nowPlayingIndex = 0
     }
     this._loadMusicDetail(musiclist[nowPlayingIndex].id)
@@ -174,6 +171,13 @@ Page({
   timeUpdate(event) {
     // 选择组件，并传入事件和参数， update()自定义事件，子组件内相应定义update()方法
     this.selectComponent('.lyric').update(event.detail.currentTime)
+  },
+
+  // 单行歌词更新
+  nowLyric(event) {
+    this.setData({
+      nowLyric: event.detail
+    })
   },
 
   // 监控到音乐播放（微信后台播放暂停按钮）

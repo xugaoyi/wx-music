@@ -1,0 +1,25 @@
+<view class="container">
+
+  <!-- textarea 为 原生组件 -->
+  <textarea
+    class="content"
+    placeholder="分享新鲜事..."
+    maxlength="140"
+    auto-focus
+    bindinput="onInput"
+    bindfocus="onFocus"
+    bindblur="onBlur"
+  ></textarea>
+  <view class="image-list">
+    <!-- 显示图片 -->
+
+    <!-- 选择图片 -->
+    <view class="image-wrap selectphoto">
+      <icon class="iconfont icon-jiahao"></icon>
+    </view>
+  </view>
+</view>
+<view class="footer" style="bottom:{{footerBottom}}px">
+  <text class="words-num">{{wordsNum}}</text>
+  <button class="send-btn">发布</button>
+</view>

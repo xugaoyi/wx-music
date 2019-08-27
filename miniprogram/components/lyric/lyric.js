@@ -13,9 +13,19 @@ Component({
     lyric: String
   },
 
+  /**
+   * 组件的初始数据
+   */
+  data: {
+    lrcList: [],
+    nowLyricIndex: 0, // 当前高亮歌词索引
+    nowLyric:'', // 当前单行歌词
+    scrollTop: 0
+  },
+
   // 对数据的监听(数据初次加载完成也会执行)
   observers: {
-    lyric(lrc){
+    lyric(lrc) {
       if (lrc == '暂无歌词') {
         this.setData({
           lrcList: [
@@ -24,23 +34,17 @@ Component({
               time: 10000
             }
           ],
-          nowLyricIndex: -1
+          nowLyricIndex: -1,
+          nowLyric: '暂无歌词'
         })
       } else {
         this._parseLyric(lrc)
       }
+    },
+    nowLyric(lrc) {
+      this.triggerEvent('nowLyric', lrc) // 向父组件传值 当前歌词
     }
   },
-
-  /**
-   * 组件的初始数据
-   */
-  data: {
-    lrcList: [],
-    nowLyricIndex: 0, // 当前高亮歌词索引
-    scrollTop: 0
-  },
-
   // 生命周期
   lifetimes: {
     ready() {
@@ -63,15 +67,18 @@ Component({
       if (lrcList == 0) {
         return
       }
+      
       // 对最后一行歌词无法高亮的处理
       if (currentTime > lrcList[lrcList.length - 1].time) { // 当前播放的时间大于歌词最后一行的时间
         if (isTouch) {
           this.setData({
-            nowLyricIndex: lrcList.length - 1
+            nowLyricIndex: lrcList.length - 1,
+            nowLyric: lrcList[lrcList.length - 1].lrc // 当前单行歌词
           })
         } else {
           this.setData({
             nowLyricIndex: lrcList.length - 1,
+            nowLyric: lrcList[lrcList.length - 1].lrc, // 当前单行歌词
             scrollTop: lrcList.length * lyricHeight
           })
         }
@@ -80,13 +87,16 @@ Component({
         if (currentTime <= lrcList[i].time) {
           if (isTouch) {
             this.setData({
-              nowLyricIndex: i - 1 // 歌词高亮
+              nowLyricIndex: i - 1, // 歌词高亮索引
+              nowLyric: (i - 1) === -1 ? '' : lrcList[i - 1].lrc // 当前单行歌词
             })
           } else {
             this.setData({
-              nowLyricIndex: i - 1, // 歌词高亮
+              nowLyricIndex: i === 0 ? i : i - 1, // 歌词高亮索引
+              nowLyric: (i - 1) === -1 ? '' : lrcList[i - 1].lrc, // 当前单行歌词
               scrollTop: (i - 1) * lyricHeight // 歌词滚动条位置
             })
+            console.log()
           }
           break
         }

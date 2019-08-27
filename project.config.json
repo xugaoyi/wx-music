@@ -30,19 +30,27 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
-					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
-					"query": ""
+					"id": 1,
+					"name": "歌单页",
+					"pathName": "pages/musiclist/musiclist",
+					"query": "playlistId=126747075",
+					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "pages/musiclist/musiclist",
-					"pathName": "pages/musiclist/musiclist",
-					"query": "playlistId=126747075",
+					"name": "发现页面",
+					"pathName": "pages/blog/blog",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "博客编辑页",
+					"pathName": "pages/blog-edit/blog-edit",
+					"query": "nickName=Evan&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/zzpmPJCibIgACHmmD…ebXibfbTH1TiafncBvrEu2wI7BvgORLAR3BVNx6rbKqJA/132",
 					"scene": null
 				}
 			]

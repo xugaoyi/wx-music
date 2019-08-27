@@ -8,11 +8,16 @@
     <image class="player-img rotation {{isPlaying ? '' : 'rotation-paused'}}" src="{{picUrl}}"></image>
   </view>
 
-  <!-- 歌手、歌曲 -->
-  <text hidden="{{isLyricShow}}" class="singer">{{singer}} - {{musicName}}</text>
+  <!-- 单行歌词 -->
+  <text class="lyric-line" hidden="{{isLyricShow}}" bind:tap="onChangeLyricShow" >{{nowLyric}}</text>
 
   <!-- 歌词 -->
-  <x-lyric class="lyric" bind:tap="onChangeLyricShow" isLyricShow="{{!isLyricShow}}" lyric="{{lyric}}" />
+  <x-lyric class="lyric"
+    bind:tap="onChangeLyricShow"
+    isLyricShow="{{!isLyricShow}}"
+    lyric="{{lyric}}"
+    bind:nowLyric="nowLyric"
+  />
 
   <!-- 进度条 -->
   <view class="progress-bar">
