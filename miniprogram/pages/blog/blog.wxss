@@ -36,3 +36,9 @@
   margin-bottom: 20rpx;
   box-sizing: border-box;
 }
+.no-more{
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}

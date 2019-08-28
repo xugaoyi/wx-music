@@ -11,6 +11,16 @@
     </view>
   </view>
 
+  <!-- 博客卡片列表 -->
+  <view class="blog-list">
+    <block wx:for="{{blogList}}" wx:key="_id">
+      <view class="blog-panel">
+        <x-blog-card blog="{{item}}" />
+      </view>
+    </block>
+  </view>
+
+  <view class="no-more" wx:if="{{!isMore}}">没有更多了...</view>
   <!-- 底部弹出层 -->
   <x-login
     modalShow="{{modalShow}}"

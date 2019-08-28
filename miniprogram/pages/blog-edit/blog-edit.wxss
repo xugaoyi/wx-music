@@ -30,8 +30,9 @@
 .send-btn {
   background: #d43c33;
   color: #fff;
-  font-size: 24rpx;
+  font-size: 28rpx;
   margin-right: 20rpx;
+  padding: 0 20px;
 }
 
 /* 图片样式 */
@@ -59,10 +60,10 @@
 
 .icon-shanchu {
   position: absolute;
-  top: 0;
+  top: -8rpx;
   right: 0;
   width: 40rpx;
-  height: 40rpx;
+  height: 48rpx;
   background-color: #000;
   opacity: 0.4;
   color: #fff;
