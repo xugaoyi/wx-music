@@ -13,8 +13,19 @@ exports.main = async (event, context) => {
 
   // 获取博客列表
   app.router('blogList', async (ctx, next) => {
-    // skip 从第几条开始查，limit 查几条数据，orderBy(排序字段，排序方式) 排序，排序方式desc降序/asc升序
-    ctx.body =  await blogCollection.skip(event.start).limit(event.count)
+    const keyword = event.keyword // 搜索关键字
+    let w = {}
+    if (keyword.trim() != '') {
+      w = {
+        content: db.RegExp({ // 正则
+          regexp: keyword,
+          options: 'i' // i表示忽略大小写
+        })
+      }
+    }
+
+    // where查询条件 skip 从第几条开始查，limit 查几条数据，orderBy(排序字段，排序方式) 排序，排序方式desc降序/asc升序
+    ctx.body =  await blogCollection.where(w).skip(event.start).limit(event.count)
     .orderBy('createTime', 'desc').get().then((res) => {
       return res.data
     })

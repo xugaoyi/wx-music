@@ -7,7 +7,8 @@
     <view class="search-container">
 
       <!-- iconfont 和 icon-sousuo 是传入组件内部的样式名称，iconfont（自定义名称）="iconfont（外部样式文件中定义的样式名）"  -->
-      <x-search iconfont="iconfont" icon-sousuo="icon-sousuo"/>
+      <!-- search 子组件传递出来的自定义事件 -->
+      <x-search iconfont="iconfont" icon-sousuo="icon-sousuo" bind:search="onSearch"/>
     </view>
   </view>
 
@@ -15,7 +16,13 @@
   <view class="blog-list">
     <block wx:for="{{blogList}}" wx:key="_id">
       <view class="blog-panel">
-        <x-blog-card blog="{{item}}" />
+        <x-blog-card blog="{{item}}" data-blogid="{{item._id}}" bind:tap="goComment" />
+        <!-- 评论、分享组件 iconfont 调用外部样式-->
+        <x-blog-ctrl
+          iconfont="iconfont"
+          icon-pinglun="icon-pinglun"
+          icon-fenxiang="icon-fenxiang"
+        />
       </view>
     </block>
   </view>

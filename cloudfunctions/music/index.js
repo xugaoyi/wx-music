@@ -1,16 +1,17 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
+cloud.init()
+
 const TcbRouter = require('tcb-router') // 引入tcb-router 
 
 const rp = require('request-promise') // 向服务器发送请求的依赖
 
 const db = cloud.database() // 初始化数据库
+
 const playlistCollection = db.collection('playlist') // 数据库集合
 
 const BASE_URL = 'http://musicapi.xiecheng.live'
-
-cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {

@@ -98,6 +98,7 @@ Page({
 
     wx.showLoading({
       title: '发布中',
+      mask: true // 蒙版
     })
     /**
      * 实现思路及步骤：
@@ -145,12 +146,14 @@ Page({
         wx.showToast({
           title: '发布成功',
         })
+        
+        content = '' // 清空输入内容缓存
+
         // 返回博客页面，并刷新
         wx.navigateBack()
-        const pages = getCurrentPages()
-        // 取到上一个页面
-        const prevPage = pages[pages.length - 2]
-        prevPage.onPullDownRefresh()
+        const pages = getCurrentPages() // 获取当前页面栈
+        const prevPage = pages[pages.length - 2]// 取到上一个页面
+        prevPage.onPullDownRefresh() // 执行上一个页面的方法 onPullDownRefresh
 
       })
     }).catch((err) => {

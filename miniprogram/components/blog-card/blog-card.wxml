@@ -9,7 +9,8 @@
   <view class="blog-content">{{blog.content}}</view>
   <view class="blog-img">
     <block wx:for="{{blog.img}}" wx:key="{{index}}">
-      <image class="img" src="{{item}}" mode="aspectFill" catch:tap="onPreviewImage" data-imgsrc="{{item}}" data-imgs="{{blog.img}}"></image>
+      <!-- bind和catch都可以绑定事件，它们的区别是bind有事件冒泡，而catch没有 -->
+      <image class="img" src="{{item}}" lazy-load="true" mode="aspectFill" catch:tap="onPreviewImage" data-imgsrc="{{item}}" data-imgs="{{blog.img}}"></image>
     </block>
   </view>
 </view>

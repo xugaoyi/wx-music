@@ -1,6 +1,6 @@
 <view class="container">
   <!-- iconfont icon-sousuo 这两个样式为外部传入 -->
   <i class="iconfont icon-sousuo find" />
-  <input class="bar" placeholder="{{placeholder}}" placeholder-class="in-bar"></input>
-  <button class="search">搜索</button>
+  <input class="bar" placeholder="{{placeholder}}" placeholder-class="in-bar" bindinput="onInput"></input>
+  <button class="search" bindtap="onSearch">搜索</button>
 </view>

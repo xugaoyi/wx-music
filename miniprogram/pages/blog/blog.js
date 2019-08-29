@@ -1,5 +1,6 @@
-// pages/blog/blog.js
 let blogListLength = 0
+let keyword = '' // 搜索关键字
+let userInfo = {}
 Page({
 
   /**
@@ -13,24 +14,32 @@ Page({
 
   //发布功能
   onPublish() {
-    // 判断用户是否授权
-    wx.getSetting({
-      success: (res) => { // 这里使用箭头函数可改变内部this指向为外部的this
-        if (res.authSetting['scope.userInfo']) { // 已授权
-         wx.getUserInfo({ // 获取用户信息
-           success: (res) => { // 这里使用箭头函数可改变内部this指向为外部的this
-             this.onLoginSuccess({
-               detail: res.userInfo
-             })
-           }
-         })
-        } else { // 未授权
-          this.setData({ // 打开弹出层，显示获取用户信息按钮
-            modalShow: true
-          })
+    // 此判断对已存在用户数据时可减少卡顿
+    if (Object.keys(userInfo).length != 0) { // 是否已经授权过并且获取了昵称头像
+      this.onLoginSuccess({
+        detail: userInfo
+      })
+    } else {
+      // 判断用户是否授权
+      wx.getSetting({
+        success: (res) => { // 这里使用箭头函数可改变内部this指向为外部的this
+          if (res.authSetting['scope.userInfo']) { // 已授权
+            wx.getUserInfo({ // 获取用户信息
+              success: (res) => { // 这里使用箭头函数可改变内部this指向为外部的this
+                userInfo = res.userInfo
+                this.onLoginSuccess({
+                  detail: userInfo
+                })
+              }
+            })
+          } else { // 未授权
+            this.setData({ // 打开弹出层，显示获取用户信息按钮
+              modalShow: true
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   
   // 用户授权成功
@@ -53,15 +62,30 @@ Page({
    */
   onLoad: function (options) {
     this._loadBlogList(0)
+
+    // // 小程序端调用云数据库示例
+    // const db = wx.cloud.database() // 初始化数据库
+    // // orderBy 根据createTime字段 deac降序 /asc 升序 查询 
+    // db.collection('blog').orderBy('createTime','deac').get().then((res) => {
+    //   const data = res.data
+    //   data.forEach((item) => { // createTime 字段的类型需要转成字符串 （小程序的坑）
+    //     item.createTime = item.createTime.toString()
+    //   })
+    //   this.setData({
+    //     blogList: data
+    //   })
+    // })
     
-    wx.cloud.callFunction({
-      name: 'blog',
-      data: {
-        $url: 'getBlogListLength'
-      }
-    }).then((res) => {
-      blogListLength = res.result.total
+    this._getBlogListLength() // 获取博客总计数
+  },
+
+  // 搜索
+  onSearch(event) {
+    keyword = event.detail.keyword
+    this.setData({
+      blogList: []
     })
+    this._loadBlogList(0)
   },
 
   // 加载博客列表数据
@@ -70,19 +94,21 @@ Page({
     let loadingTielt = '拼命加载中'
     if (mode === 'refresh') {
       loadingTielt = '正在刷新'
-      
+      this._getBlogListLength() // 获取博客总计数
       this.setData({
         isMore: true
       })
     }
+    
     wx.showLoading({
       title: loadingTielt,
     })
     wx.cloud.callFunction({
       name: 'blog',
       data: {
+        keyword,
         start,
-        count: 10,
+        count: 15, // 每次加载几条
         $url: 'blogList'
       }
     }).then((res) => {
@@ -96,6 +122,25 @@ Page({
       })
       wx.hideLoading()
       wx.stopPullDownRefresh()
+    })
+  },
+
+  // 获取博客总计数
+  _getBlogListLength() {
+    wx.cloud.callFunction({
+      name: 'blog',
+      data: {
+        $url: 'getBlogListLength'
+      }
+    }).then((res) => {
+      blogListLength = res.result.total
+    })
+  },
+
+  // 进入博客卡片详情
+  goComment(event) {
+    wx.navigateTo({
+      url: '../../pages/blog-comment/blog-comment?blogId=' + event.target.dataset.blogid,
     })
   },
 

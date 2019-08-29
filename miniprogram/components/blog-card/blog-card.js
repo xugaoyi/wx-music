@@ -31,8 +31,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 预览图片
     onPreviewImage(event) {
-      const ds = event.target.dataset
+      const ds = event.target.dataset // 获取标签的自定义属性
       wx.previewImage({
         urls: ds.imgs,
         current: ds.imgsrc,
