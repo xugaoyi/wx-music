@@ -19,6 +19,8 @@
         <x-blog-card blog="{{item}}" data-blogid="{{item._id}}" bind:tap="goComment" />
         <!-- 评论、分享组件 iconfont 调用外部样式-->
         <x-blog-ctrl
+          blogId="{{item._id}}"
+          blog="{{item}}"
           iconfont="iconfont"
           icon-pinglun="icon-pinglun"
           icon-fenxiang="icon-fenxiang"

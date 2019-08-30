@@ -1,17 +1,18 @@
 // 时间格式化 模块封装
-module.exports = (date) => { // date 数据格式为 date
+module.exports = (date, isShowText = true) => { // date 数据格式为 date
 
   let day = showText(date) // 判断今天、昨天、前天
   let fmt = ''
   let o = {}
 
-  if (day != '') {
+  if (isShowText && day != '' ) {
     fmt = 'hh:mm'
     o = {
       'h+': date.getHours(),
       'm+': date.getMinutes()
     }
   } else {
+    day = ''
     fmt = 'yyyy年MM月dd日hh:mm' // 预定格式
     o = {
       // + 正则中的1个或多个

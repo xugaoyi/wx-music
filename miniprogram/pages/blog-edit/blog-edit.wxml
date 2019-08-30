@@ -1,6 +1,6 @@
 <view class="container">
 
-  <!-- textarea 为 原生组件 -->
+  <!-- textarea 为 原生组件 auto-focus 自动获取焦点-->
   <textarea
     class="content"
     placeholder="分享新鲜事..."

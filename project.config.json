@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": 1,
@@ -40,7 +40,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "发现页面",
 					"pathName": "pages/blog/blog",
 					"query": "",
@@ -51,6 +51,13 @@
 					"name": "博客编辑页",
 					"pathName": "pages/blog-edit/blog-edit",
 					"query": "nickName=Evan&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/zzpmPJCibIgACHmmD…ebXibfbTH1TiafncBvrEu2wI7BvgORLAR3BVNx6rbKqJA/132",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "博客详情",
+					"pathName": "pages/blog-comment/blog-comment",
+					"query": "",
 					"scene": null
 				}
 			]

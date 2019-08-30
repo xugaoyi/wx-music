@@ -17,7 +17,8 @@ App({
 
      // 设置全局属性、方法
     this.globalData = {
-      playingMusicId: -1
+      playingMusicId: -1,
+      userInfo: {}
     }
   },
   setGlobalData(dataItem, val) { // 设置全局属性
