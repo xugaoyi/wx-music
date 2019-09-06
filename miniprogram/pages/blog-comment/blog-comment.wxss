@@ -7,7 +7,7 @@
 }
 
 .blog-card {
-  /* margin-bottom: 20rpx; */
+  margin-bottom: 20rpx;
 }
 
 .tab {
@@ -15,7 +15,7 @@
   line-height: 80rpx;
   padding: 0 20rpx;
   background: #fff;
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+  /* border-bottom: 1rpx solid rgba(0, 0, 0, 0.1); */
 }
 
 .tab-item {
@@ -68,4 +68,10 @@
   bottom: 0;
   left: 0;
   border-top: 2rpx solid rgba(0, 0, 0, 0.1);
+}
+.no-comment {
+  text-align: center;
+  padding-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
 }

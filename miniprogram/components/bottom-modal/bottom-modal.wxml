@@ -1,6 +1,6 @@
-<view class="modal" hidden="{{!modalShow}}">
-  <view class="bg" bind:tap="onClose"></view>
-  <view class="panel" style="bottom:{{footerBottom}}px">
+<view class="modal" hidden="{{!modalShow}}" bind:tap="onClose">
+  <view class="bg" ></view>
+  <view class="panel" catchtap>
     <!-- <i class="iconfont icon-shanchu1" bind:tap="onClose" /> -->
 
     <!-- slot插槽 -->

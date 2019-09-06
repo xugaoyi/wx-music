@@ -5,12 +5,7 @@ Component({
    */
   properties: {
     modalShow: Boolean,
-    footerBottom: {
-      type: Number,
-      value: 0
-    }
   },
-
   // 设置
   options: {
     styleIsolation: 'apply-shared', // 消除样式隔离

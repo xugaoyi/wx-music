@@ -4,9 +4,9 @@
   </view>
 
   <!-- 评论tab -->
-  <!-- <view class="tab">
+  <view class="tab">
     <view class="tab-item">评论列表</view>
-  </view> -->
+  </view>
 
   <!-- 评论内容列表 -->
   <view class="comment-list">
@@ -21,6 +21,10 @@
         </view>
       </view>
     </block>
+  </view>
+
+  <view class="no-comment" hidden="{{isComment}}">
+      还没有评论，快抢占沙发吧~
   </view>
 </scroll-view>
 

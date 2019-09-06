@@ -9,6 +9,7 @@ Page({
   data: {
     modalShow: false, // 控制底部弹出层是否显示
     blogList: [],
+    isBlog: true, // 是否有博客数据
     isMore: true // 是否还有更多数据
   },
 
@@ -129,6 +130,17 @@ Page({
       this.setData({
         blogList: this.data.blogList.concat(res.result)
       })
+
+      if (this.data.blogList.length === 0) {
+        this.setData({
+          isBlog: false
+        })
+      } else {
+        this.setData({
+          isBlog: true
+        })
+      }
+      
       wx.hideLoading()
       wx.stopPullDownRefresh()
     })

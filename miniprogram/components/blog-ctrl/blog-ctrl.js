@@ -23,15 +23,43 @@ Component({
     modalShow: false, // 是否显示评论输入框
     isFocus: false,
     content: '', // 输入的评论
-    footerBottom: 0
+    commentLength: 0 // 评论数
+  },
+  // 生命周期
+  lifetimes: {
+      ready() { // 在组件在视图层布局完成后执行
+        if (this.properties.blog === null) { // 详情页没有blog数据，不显示评论数
+          this.setData({
+            commentLength: ''
+          })
+        }
+      }
   },
 
+  // 对数据的监听(数据初次加载完成也会执行)
+  observers: { 
+    blog(newData) {
+      this.setData({
+        commentLength: newData.commentLength
+      })
+    }
+  },
   /**
    * 组件的方法列表
    */
   methods: {
     // 评论
     onComment() {
+
+      // 需求修改：博客列表页点击评论跳到详情页
+      if (this.properties.blog !== null) {
+        wx.navigateTo({
+          url: '../../pages/blog-comment/blog-comment?blogId=' + this.properties.blogId,
+        })
+        return
+      }
+
+
       // 此判断对已存在用户数据时可减少卡顿
       if (Object.keys(app.getGlobalData('userInfo')).length != 0) { // 是否已经授权过并且获取了昵称头像
         // 显示评论弹出层
@@ -89,20 +117,6 @@ Component({
       })
     },
 
-    // 获取到焦点
-    onFocus(event) {
-      this.setData({
-        footerBottom: event.detail.height // 键盘的高度
-      })
-    },
-    
-    // 失去焦点
-    onBlur() {
-      this.setData({
-        footerBottom: 0
-      })
-    },
-
     // 发送评论
     onSend(event) {
      
@@ -131,6 +145,11 @@ Component({
           avatarUrl: userInfo.avatarUrl
         }
       }).then((res) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '评论成功',
+        })
+
         // 推送模板消息
         wx.cloud.callFunction({
           name: 'sendMessage',
@@ -144,14 +163,17 @@ Component({
           console.log(res)
         })
 
-        wx.hideLoading()
-        wx.showToast({
-          title: '评论成功',
-        })
+        let commentL = this.data.commentLength
+        if (this.properties.blog === null) { // 详情页没有blog数据，不显示评论数
+          commentL = ''
+        }
+        console.log(commentL++)
+
         this.setData({
           modalShow: false,
           isFocus: false,
           content: '',
+          commentLength: commentL++
         })
 
         // 父元素刷新评论页面

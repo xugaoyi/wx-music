@@ -28,11 +28,22 @@ exports.main = async(event, context) => {
     }
 
     // where查询条件 skip 从第几条开始查，limit 查几条数据，orderBy(排序字段，排序方式) 排序，排序方式desc降序/asc升序
-    ctx.body = await blogCollection.where(w).skip(event.start).limit(event.count)
+    let data = await blogCollection.where(w).skip(event.start).limit(event.count)
       .orderBy('createTime', 'desc').get().then((res) => {
         return res.data
       })
 
+    // 获取评论条数
+    let commentCount = {}
+    for(let i=0;i<data.length;i++){
+      commentCount = await db.collection('blog-comment').where({
+        blogId: data[i]._id
+      }).count()
+      // 不能直接在.count()后面添加 total，因为是异步函数，没获取到数据直接添加total取到的是undefined
+      data[i].commentLength = commentCount.total
+    }
+
+    ctx.body = data
   })
 
   // 获取博客列表总长度
@@ -52,7 +63,7 @@ exports.main = async(event, context) => {
     })
 
     // 评论查询
-    const countResult = await blogCollection.count()
+    const countResult = await db.collection('blog-comment').count()
     const total = countResult.total
     let commentList = {
       data: []

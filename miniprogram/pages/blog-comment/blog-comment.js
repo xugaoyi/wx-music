@@ -8,7 +8,8 @@ Page({
   data: {
     blog: {},
     commentList: [],
-    blogId: ''
+    blogId: '',
+    isComment: true
   },
 
   /**
@@ -46,6 +47,17 @@ Page({
         commentList,
         blog: res.result.detail[0]
       })
+
+      // 是否有评论
+      if(this.data.commentList.length > 0) {
+        this.setData({
+          isComment: true
+        })
+      } else {
+        this.setData({
+          isComment: false
+        })
+      }
     })
   },
 

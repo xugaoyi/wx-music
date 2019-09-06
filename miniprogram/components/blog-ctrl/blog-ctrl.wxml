@@ -1,6 +1,7 @@
 <view class="ctrl">
   <view class="ctrl-item" bind:tap="onComment">
     <i class="iconfont icon-pinglun icon"></i>
+    <text>{{commentLength}}</text>
     <!-- <text>评论</text> -->
   </view>
   <view class="ctrl-item share">
@@ -24,9 +25,15 @@
  />
 
 <!-- 底部弹出层-评论输入 -->
-<x-bottom-modal modalShow="{{modalShow}}" footerBottom="{{footerBottom}}">
+<x-bottom-modal modalShow="{{modalShow}}">
   <form slot="modal-content" report-submit="true" bind:submit="onSend">
-    <textarea name="content" focus="{{isFocus}}" bindfocus="onFocus" bindblur="onBlur" class="comment-content" placeholder="写评论" value="{{content}}" fixed="true"></textarea>
+    <textarea
+      name="content"
+      focus="{{isFocus}}"
+      class="comment-content"
+      placeholder="写评论"
+      value="{{content}}"
+      fixed="true"></textarea>
     <button class="send" form-type="submit">发送</button>
   </form>
 </x-bottom-modal>
