@@ -1,4 +1,7 @@
+// 播放列表
 let musiclist = []
+
+// 当前播放歌曲索引
 let nowPlayingIndex = 0
 
 // 获取全局唯一的背景音频管理器
@@ -105,6 +108,9 @@ Page({
         backgroundAudioManager.coverImgUrl = music.al.picUrl // 歌曲图片
         backgroundAudioManager.singer = music.ar[0].name // 歌手
         backgroundAudioManager.epname = music.al.name // 专辑
+
+        // 保存播放历史到本地存储
+        this.savePlayHistory()
       }
       this.setData({
         isPlaying: true
@@ -192,6 +198,27 @@ Page({
     this.setData({
       isPlaying: false
     })
+  },
+
+  // 保存播放历史到本地存储
+  savePlayHistory() {
+    const currentSong = musiclist[nowPlayingIndex] // 当前播放歌曲
+    const openid = app.globalData.openid // 从全局属性获取openid
+    const playHistory = wx.getStorageSync(openid) // 从本地存储获取播放历史数组
+
+    for (let i = 0, len = playHistory.length; i < len; i++) {
+      if (playHistory[i].id === currentSong.id) { // 当前播放歌曲已存在播放历史中
+        playHistory.splice(i, 1) // 删除原纪录
+        break
+      }
+    }
+
+    playHistory.unshift(currentSong) // 在数组开头插入
+    wx.setStorage({ // 存入本地
+      key: openid,
+      data: playHistory
+    })
+
   },
 
   /**

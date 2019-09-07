@@ -15,8 +15,11 @@ App({
       })
     }
 
+    this.getOpenid() // 获取openid并存储
+
      // 设置全局属性、方法
     this.globalData = {
+      openid: -1,
       playingMusicId: -1,
       userInfo: {}
     }
@@ -26,5 +29,16 @@ App({
   },
   getGlobalData(dataItem) { // 获取全局属性
     return this.globalData[dataItem]
+  },
+  getOpenid() { // 获取openid并存储
+    wx.cloud.callFunction({
+      name: 'login'
+    }).then((res) => {
+      const openid = res.result.openid
+      this.globalData.openid = openid // 保存到全局变量
+      if (wx.getStorageSync(openid) == '') { // 该用户从未打开过小程序，未存储过openid在本地
+        wx.setStorageSync(openid, []) // 存储openid到本地
+      }
+    })
   }
 })

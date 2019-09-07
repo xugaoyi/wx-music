@@ -1,0 +1,4 @@
+<x-musiclist musiclist="{{playHistory}}" />
+<view class="no-history" hidden="{{playHistory.length > 0}}">
+      您还没有播放过歌曲哦~
+</view>

@@ -94,5 +94,35 @@ exports.main = async(event, context) => {
     }
   })
 
+  const wxContext = cloud.getWXContext()
+  // 获取我的博客列表总长度
+  app.router('getMyBlogListLength', async (ctx, next) => {
+    ctx.body = await blogCollection.where({
+      _openid: wxContext.OPENID
+    }).count()
+  })
+
+  // 我的博客
+  app.router('getListByOpenid', async (ctx, next) => {
+    let data = await blogCollection.where({
+      _openid: wxContext.OPENID
+    }).skip(event.start).limit(event.count)
+    .orderBy('createTime', 'desc').get().then((res) => {
+      return res.data
+    })
+
+    // 获取评论条数
+    let commentCount = {}
+    for (let i = 0; i < data.length; i++) {
+      commentCount = await db.collection('blog-comment').where({
+        blogId: data[i]._id
+      }).count()
+      // 不能直接在.count()后面添加 total，因为是异步函数，没获取到数据直接添加total取到的是undefined
+      data[i].commentLength = commentCount.total
+    }
+
+    ctx.body = data
+  })
+
   return app.serve() // 必需返回
 }

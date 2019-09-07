@@ -163,17 +163,16 @@ Component({
           console.log(res)
         })
 
-        let commentL = this.data.commentLength
+        let commentL = this.data.commentLength++
         if (this.properties.blog === null) { // 详情页没有blog数据，不显示评论数
           commentL = ''
         }
-        console.log(commentL++)
 
         this.setData({
           modalShow: false,
           isFocus: false,
           content: '',
-          commentLength: commentL++
+          commentLength: commentL
         })
 
         // 父元素刷新评论页面

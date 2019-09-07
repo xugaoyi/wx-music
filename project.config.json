@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 5,
 			"list": [
 				{
 					"id": 1,
@@ -41,7 +41,7 @@
 				},
 				{
 					"id": 1,
-					"name": "发现页面",
+					"name": "《发现》页面",
 					"pathName": "pages/blog/blog",
 					"query": "",
 					"scene": null
@@ -57,6 +57,20 @@
 					"id": -1,
 					"name": "博客详情",
 					"pathName": "pages/blog-comment/blog-comment",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "《我的》页面",
+					"pathName": "pages/profile/profile",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/profile-bloghistory/profile-bloghistory",
+					"pathName": "pages/profile-bloghistory/profile-bloghistory",
 					"query": "",
 					"scene": null
 				}

@@ -1,0 +1,15 @@
+.blog-panel {
+  margin-bottom: 20rpx;
+}
+.no-more{
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.no-blog {
+  text-align: center;
+  padding-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}

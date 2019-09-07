@@ -118,7 +118,7 @@ Page({
       data: {
         keyword,
         start,
-        count: 15, // 每次加载几条
+        count: 10, // 每次加载几条
         $url: 'blogList'
       }
     }).then((res) => {

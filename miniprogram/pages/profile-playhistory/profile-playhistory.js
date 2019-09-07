@@ -1,35 +1,32 @@
-// pages/profile/profile.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    playHistory:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-  },
 
-  // 生成小程序码
-  onTapQRCode() {
-    wx.showLoading({
-      title: '生成中',
-    })
-    wx.cloud.callFunction({
-      name: 'getQRCode'
-    }).then((res) => {
-      wx.hideLoading()
-      const fileId = res.result
-      wx.previewImage({
-        urls: [fileId],
-        current: fileId
+    const openid = app.globalData.openid //从全局属性获取openid
+    const playHistory = wx.getStorageSync(openid) // 读取本地播放历史数据
+
+    if (playHistory.length !== 0) { // 有播放历史
+      this.setData({
+        playHistory
       })
-    })
+      wx.setStorage({ // storage里把musiclist（播放列表）的内容换成播放历史的列表
+        key: 'musiclist',
+        data: playHistory,
+      })
+    }
+
   },
 
   /**

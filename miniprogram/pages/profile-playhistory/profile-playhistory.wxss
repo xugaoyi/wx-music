@@ -1,0 +1,6 @@
+.no-history {
+  text-align: center;
+  padding-top: 50rpx;
+  font-size: 28rpx;
+  color: #999;
+}
