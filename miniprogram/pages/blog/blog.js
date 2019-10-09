@@ -10,7 +10,7 @@ Page({
     modalShow: false, // 控制底部弹出层是否显示
     blogList: [],
     isBlog: true, // 是否有博客数据
-    isMore: true // 是否还有更多数据
+    isMore: '正在加载...' // 是否还有更多数据
   },
 
   //发布功能
@@ -101,18 +101,16 @@ Page({
   // 加载博客列表数据
   _loadBlogList(start, mode) {
 
-    let loadingTielt = '拼命加载中'
     if (mode === 'refresh') {
-      loadingTielt = '正在刷新'
       this._getBlogListLength() // 获取博客总计数
+      wx.showLoading({
+        title: '正在刷新',
+      })
       this.setData({
-        isMore: true
+        isMore: '正在加载...'
       })
     }
     
-    wx.showLoading({
-      title: loadingTielt,
-    })
     wx.cloud.callFunction({
       name: 'blog',
       data: {
@@ -126,6 +124,7 @@ Page({
         this.setData({
           blogList: []
         })
+        wx.hideLoading()
       }
       this.setData({
         blogList: this.data.blogList.concat(res.result)
@@ -133,7 +132,8 @@ Page({
 
       if (this.data.blogList.length === 0) {
         this.setData({
-          isBlog: false
+          isBlog: false,
+          isMore: ''
         })
       } else {
         this.setData({
@@ -141,7 +141,7 @@ Page({
         })
       }
       
-      wx.hideLoading()
+      
       wx.stopPullDownRefresh()
     })
   },
@@ -209,7 +209,7 @@ Page({
       this._loadBlogList(bl)
     } else {
       this.setData({
-        isMore: false
+        isMore: '没有更多了'
       })
     }
     

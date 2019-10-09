@@ -54,9 +54,16 @@ Page({
 
     let music = musiclist[nowPlayingIndex]
 
-    wx.setNavigationBarTitle({ // 设置title
-      title: music.name + ' - ' + music.ar[0].name,
-    })
+    
+    const pages = getCurrentPages() // 页面栈
+    const urrentPage = pages[pages.length - 1].route  // 当前页面url
+
+    if(urrentPage.indexOf('player') !== -1) { // 判断是否在播放器页面
+      wx.setNavigationBarTitle({ // 设置title
+        title: music.name + ' - ' + music.ar[0].name,
+      })
+    }
+
     this.setData({
       picUrl: music.al.picUrl, // 唱片图片
       isPlaying: false

@@ -2,7 +2,7 @@
 <swiper indicator-dots="true" circular="true" interval="3000" duration="500">
   <block wx:for="{{swiperImgUrls}}" wx:key="url"> <!-- 空节点 -->
     <swiper-item>
-      <image src="{{item.url}}" mode="widthFix" class="img"></image>
+      <image src="{{item.fileid}}" mode="widthFix" class="img" data-id="{{item.playlistid}}" bindtap="goToMusiclist"></image>
     </swiper-item>
   </block>
 </swiper>
@@ -12,6 +12,7 @@
     <!-- 参数：playlist 自定义名称，传入组件的数据 -->
     <x-playlist playlist="{{item}}"></x-playlist>
   </block>
+  <view class="load-more" hidden="{{!loadMore}}">正在加载...</view>
 </view>
 
 

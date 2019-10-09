@@ -36,15 +36,12 @@
   margin-bottom: 20rpx;
   box-sizing: border-box;
 }
-.no-more{
+.load-more,.no-blog {
   text-align: center;
   padding-bottom: 20rpx;
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #999;
 }
 .no-blog {
-  text-align: center;
-  padding-bottom: 20rpx;
   font-size: 28rpx;
-  color: #999;
 }

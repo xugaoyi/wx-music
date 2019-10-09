@@ -10,3 +10,9 @@
   width: 100%;
   height: 100%;
 }
+.load-more{
+  text-align: center;
+  padding-bottom: 30rpx;
+  font-size: 26rpx;
+  color: #666;
+}

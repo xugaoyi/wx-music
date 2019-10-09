@@ -30,9 +30,10 @@
     <view class="no-blog" hidden="{{isBlog}}">
       暂无数据
     </view>
+    <view class="load-more">{{isMore}}</view>
   </view>
 
-  <view class="no-more" wx:if="{{!isMore}}">没有更多了...</view>
+
   <!-- 底部弹出层 -->
   <x-login
     modalShow="{{modalShow}}"
